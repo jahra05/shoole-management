@@ -1,19 +1,20 @@
 import { Ellipsis, Plus, Trash } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import MainLayout from "../layouts/MainLayout"
+import { Typography } from "@mui/material"
 
 function NoticeBoard() {
     const navigate = useNavigate()
     return (
         <>
             <MainLayout>
-                <div className="bg-white mt-2 p-2 rounded-lg h-screen">
-
-
+                <div className="bg-white px-4 py-2 rounded-lg h-screen">
                     <div className="flex justify-between">
 
                         <div className="text-xs">
-                            <h1 className="text-lg">Teacher</h1>
+                            <Typography variant='h5' sx={{ color: "#353843", fontWeight: 'bold', }}>
+                                Natice Board
+                            </Typography>
                             <p><span className="text-gray-400 cursor-pointer" onClick={() => navigate('/dasboard')}>Dasboard / </span> add teacher</p>
                         </div>
 
@@ -28,7 +29,7 @@ function NoticeBoard() {
                     </div>
 
                     <div className="flex gap-10 mt-4">
-                        <div className="bg-white rounded-xl p-4 flex-1 border-2 border-[#f3f3f3]">
+                        <div className="bg-white rounded-xl p-4 flex-1 border border-[#f3f3f3]">
                             <div className="flex flex-row justify-between items-center p-2 ">
                                 <h2 className="font-semibold">Notice Board</h2>
                             </div>
@@ -83,7 +84,7 @@ function NoticeBoard() {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white flex-1 border-2 border-[#f3f3f3] rounded-lg justify-center flex py-10">
+                        <div className="bg-white flex-1 border border-[#f3f3f3] rounded-lg justify-center flex py-10">
                             <div className="p-4">
                                 <p className="text-4xl font-semibold">Sosialisasi kampus universitas</p>
                                 <div className="mt-4 flex gap-14 border-b py-4">
@@ -91,7 +92,7 @@ function NoticeBoard() {
                                         <p className="text-[#969696] text-l">Category</p>
                                         <p className="text-[#969696] text-l">Audience</p>
                                         <p className="text-[#969696] text-l">Date</p>
-                                        <button className="bg-red-400 w-10 h-8 flex justify-center p-2 rounded-lg"><Trash size={18} color="white"/></button>
+                                        <button className="bg-red-400 w-10 h-8 flex justify-center p-2 rounded-lg"><Trash size={18} color="white" /></button>
                                     </div>
                                     <div className="flex flex-col gap-4">
                                         <span className="text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded">Academic</span>

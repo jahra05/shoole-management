@@ -1,25 +1,70 @@
-import { CheckCheck, CheckCircle, LucideCheckCheck, Plus } from "lucide-react"
+import { CheckCheck, CheckCircle, LucideCheckCheck, Plus, X } from "lucide-react"
 import MainLayout from "../layouts/MainLayout"
+import { Box, Button, Checkbox, FormControlLabel, Modal, Stack, TextField, Typography } from "@mui/material"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2
+};
 
 function Attandance() {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const navigate = useNavigate()
     return (
         <>
             <MainLayout>
-                <div className="bg-white mt-2 p-2 rounded-lg h-screen">
-
+                <div className="bg-white px-4 py-2 rounded-lg h-screen">
                     <div className="flex justify-between">
                         <div className="text-xs">
-                            <h1 className="text-lg">Class</h1>
-                            <p><span className="text-gray-400 cursor-pointer" onClick={() => navigate('/dasboard')}>Dasboard / </span> add class</p>
+                            <Typography variant='h5' sx={{ color: "#353843", fontWeight: 'bold', }}>
+                                Attandance
+                            </Typography>
+                            <p><span className="text-gray-400 cursor-pointer" onClick={() => navigate('/dasboard')}>Dasboard / </span> attandance</p>
                         </div>
-
-                        <div className="flex bg-[#f3f3f3] p-2 h-8 items-center gap-1 rounded-md text-center"
-                            onClick={() => navigate('/add-students')}>
-                            <button className="text-xs">Add Attandance</button>
+                        <div className="flex bg-[#f3f3f3] p-2 h-8 items-center gap-1 rounded-md text-center">
+                            <button className="text-xs" onClick={handleOpen}>Add Attandance</button>
                             <Plus size={14} />
-
                         </div>
                     </div>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description">
+                        <Box sx={style}>
+                            <Stack direction='row' sx={{ justifyContent: 'space-between' }}>
+                                <Typography variant="body2">Input Class</Typography>
+                                <X size={14} onClick={handleClose} />
+                            </Stack>
+                            <Stack spacing={2}>
+                                <Stack direction='row'>
+                                    <FormControlLabel control={<Checkbox defaultChecked />} label='Hadir' />
+                                    <FormControlLabel control={<Checkbox defaultChecked />} label='Tidak hadir' />
+                                </Stack>
+                                <TextField
+                                    id="outlined-helperText"
+                                    label="Note"
+                                    defaultValue="Default Value"
+                                    sx={{ width: 320, }}
+                                />
+                                <Typography variant="caption" sx={{ color: 'gray', width: 320 }}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas, dolores.
+                                    Lorem ipsum dolor sit amet.
+                                </Typography>
+                            </Stack>
+                            <Button variant="contained" sx={{ width: 12, fontSize: 12, height: 32, marginTop: 4 }}>Save</Button>
+                        </Box>
+                    </Modal>
 
                     <div className=" p-2 mt-8  ">
                         <p>Attandance Summary</p>
@@ -95,10 +140,7 @@ function Attandance() {
                             </div>
                         </div>
                     </div>
-
-
-
-                    <div className="bg-white p-2 rounded-lg mt-10 border-2 border-[#f3f3f3]">
+                    <div className="bg-white p-2 rounded-lg mt-10 border border-[#f3f3f3]">
                         <div className="flex justify-between">
                             <p>Attandance</p>
                             <div className="flex gap-8">
@@ -108,15 +150,14 @@ function Attandance() {
                                     <span className="hover:bg-white py-2 px-4 rounded-md text-xs"><p>Staff</p></span>
                                 </div>
                                 <div className="p-2 flex gap-4">
-                                    <select className="border p-1 text-sm ">
+                                    <select className="border p-1 text-sm rounded-md">
                                         <option>Month</option>
                                     </select>
-                                    <select className="border p-1 text-sm ">
+                                    <select className="border p-1 text-sm rounded-md">
                                         <option>Class</option>
                                     </select>
                                 </div>
                             </div>
-
 
                         </div>
                         <div className="mt-8">
@@ -160,7 +201,7 @@ function Attandance() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="border-t hover:bg-gray-100">
+                                    <tr className="border-t">
                                         <td className="p-2" >Jahra</td>
                                         <td className="px-2"><p className="bg-slate-200 text-center py-1 rounded-full text-xs h-6 w-6">A</p></td>
                                         <td className="px-2"><p className="bg-slate-200 text-center py-1 rounded-full text-xs h-6 w-6">A</p></td>
@@ -173,7 +214,7 @@ function Attandance() {
                                         <td className="px-2"><p className="bg-slate-200 text-center py-1 rounded-full text-xs h-6 w-6">A</p></td>
                                     </tr>
 
-                                    <tr className="border-t hover:bg-gray-100">
+                                    <tr className="border-t">
                                         <td className="p-2" >Jahra</td>
                                         <td className="px-2"><p className="bg-slate-200 text-center py-1 rounded-full text-xs h-6 w-6">A</p></td>
                                         <td className="px-2"><p className="bg-slate-200 text-center py-1 rounded-full text-xs h-6 w-6">A</p></td>

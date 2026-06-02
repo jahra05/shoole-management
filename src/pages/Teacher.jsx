@@ -3,61 +3,104 @@ import MainLayout from "../layouts/MainLayout"
 import { useState } from "react"
 import AddStudents from "./AddStudents"
 import { useNavigate } from "react-router-dom"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material"
 
 
+const coloumns = [
+    { id: 'name', label: 'Name', minWidth: 170 },
+    { id: 'nip', label: 'NIP', minWidth: 100 },
+    { id: 'gender', label: 'Gender', },
+    { id: 'phone', label: 'phone', },
+    { id: 'join', label: 'Joined', },
+]
+function createData(name, nip, gender, phone, join) {
+    return { name, nip, gender, phone, join }
+}
+
+const rows = [
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+    createData('Pak Usman', 12113131, "Laki - Laki", '+61 132 232 323', '12.1.01'),
+]
 
 
 function Teacher() {
     const navigate = useNavigate()
+    const [page, setPage] = useState(0)
+    const [rowPage, setRowPage] = useState(10)
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage)
+    }
+
+    const handleRowspage = (event) => {
+        setRowPage(+event.target.value);
+        setPage(0)
+    }
     return (
         <>
             <MainLayout>
-                <div className="bg-white mt-2 p-4 rounded-lg h-screen">
-
-
-                    <div className="flex flex-col gap-5 ">
-                        <div className="flex justify-between">
-
-                            <div className="text-xs">
-                                <h1 className="text-lg">Teacher</h1>
-                                <p><span className="text-gray-400 cursor-pointer" onClick={() => navigate('/dasboard')}>Dasboard / </span> add teacher</p>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <div className="flex bg-[#f3f3f3] p-2 h-8 items-center gap-1 rounded-md text-center"
-                                    onClick={() => navigate('/add-teacher')}>
-                                    <button className="text-xs">Add Student</button>
-                                    <Plus size={14} />
-
+                <div className="bg-white h-screen px-4 py-2 rounded-lg">
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-col">
+                            <div className="flex justify-between">
+                                <div>
+                                    <Typography variant='h5' sx={{ color: "#353843", fontWeight: 'bold', }}>
+                                        Teacher
+                                    </Typography>
+                                    <p className="text-xs"><span className="text-gray-400 cursor-pointer" onClick={() => navigate('/dasboard')}>Dashboard / </span> Teacher</p>
                                 </div>
-                                <div className="flex bg-[#f3f3f3] p-2 h-8 items-center gap-1 rounded-md text-center">
-                                    <button className="text-xs">Import</button>
-                                    <Plus size={14} />
+
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex bg-[#f3f3f3] p-2 h-8 items-center gap-1 rounded-md text-center"
+                                            onClick={() => navigate('/add-teacher')}>
+                                            <button className="text-xs">Add teacher</button>
+                                            <Plus size={14} />
+
+                                        </div>
+                                        <div className="flex bg-[#f3f3f3] p-2 h-8 items-center gap-1 rounded-md text-center">
+                                            <button className="text-xs">Import</button>
+                                            <Plus size={14} />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-
-
-                        <div>
-                            <div className="flex-1">
-                                <div className="flex flex-col gap-4">
+                            <div className="border border-[#f3f3f3] rounded-lg flex flex-col gap-4 mt-4 p-2">
+                                <div className="flex flex-col justify-start gap-4">
+                                    <div className="flex justify-between">
+                                        <div className="flex gap-4 items-center px-4 rounded-lg w-[50%]">
+                                            <span><Search size={18} /></span>
+                                            <input type="search" placeholder="Searching" className="p-2 border-none outline-none rounded-lg w-[80%] border border-[#E5ECF0] bg-white" />
+                                        </div>
+                                        <span className="flex gap-4 items-center bg-white p-2 border   border-[#E5ECF0] rounded-lg text-sm w-20">Filter<SlidersHorizontal size={18} /></span>
+                                    </div>
                                     <div className="flex justify-star gap-10">
-                                        <div className="bg-white border-2 border-[#f3f3f3] flex items-center justify-between w-48 p-2 rounded-lg">
+                                        <div className="bg-white flex justify-between w-50 gap-4 rounded-lg p-6 border border-[#E5ECF0] shadow-sm">
                                             <div>
                                                 <p className="text-xs text-gray-600">Total Teacher</p>
                                                 <p className="font-medium">1,245</p>
                                             </div>
                                             <span><GraduationCap size={32} /></span>
                                         </div>
-                                        <div className="bg-white border-2 border-[#f3f3f3] flex items-center justify-between w-48 p-2 rounded-lg">
+                                        <div className="bg-white flex justify-between w-50 gap-4 rounded-lg p-6 border border-[#E5ECF0] shadow-sm">
                                             <div>
                                                 <p className="text-xs text-gray-600">Full - ime Teacher</p>
                                                 <p className="font-medium">1,245</p>
                                             </div>
                                             <span><User size={32} /></span>
                                         </div>
-                                        <div className="bg-white border-2 border-[#f3f3f3] flex items-center justify-between w-48 p-2 rounded-lg">
+                                        <div className="bg-white flex justify-between w-50 gap-4 rounded-lg p-6 border border-[#E5ECF0] shadow-sm">
                                             <div>
                                                 <p className="text-xs text-gray-600">Part - Time Class</p>
                                                 <p className="font-medium">1,245</p>
@@ -65,124 +108,52 @@ function Teacher() {
                                             <span><BookOpen size={32} /></span>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="flex flex-col gap-4 mt-2">
-                                    <div className="flex gap-2 justify-end">
-                                        <div className="flex items-center rounded-lg bg-white">
-                                            <span className="px-2"><Search size={18} /></span>
-                                            <input type="search" placeholder="Searching" className="p-2 border-none outline-none rounded-lg w-80 " />
-                                        </div>
-                                        <span className="flex gap-4 items-center bg-white p-2 border rounded-lg text-sm">Filter<SlidersHorizontal size={18} /></span>
-                                    </div>
-
-                                    <div className="flex gap-8">
-                                        <div className="border  border-[#E5ECF0] bg-white w-72 p-4 rounded-lg">
-                                            <div className="flex gap-2">
-                                                <div className="border border-[#E5ECF0] w-10 h-10 flex items-center justify-center rounded-lg "><User /></div>
-                                                <div className="flex flex-col">
-                                                    <p className="text-sm cursor-pointer">Nama Guru</p>
-                                                    <p className="text-sm text-gray-400">Nip: <span className="text-gray-400">111323</span></p>
-                                                    <span className="bg-orange-100 border border-orange-200 text-orange-400 text-center text-xs h-6 w-14 py-1 rounded-md mt-2">Aktif</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-2 border-b py-4">
-                                                <div className="flex gap-2 items-center"><Book size={16} /> <p className="text-sm text-gray-400">pelajaran</p></div>
-                                                <div className="flex gap-2 items-center"><Square size={16} /><p className="text-sm text-gray-400">Guru@gmail.com</p></div>
-                                                <div className="flex gap-3 items-center"><Phone size={16} /><p className="text-sm text-gray-400">+625464435345</p></div>
-                                            </div>
-                                            <div className="mt-4 flex justify-between">
-                                                <button className="text-xs border w-52 flex justify-center items-center gap-1 py-2 rounded-md" onClick={() => navigate('/detail-teacher')}><Edit size={14} />Edit</button>
-                                                <button className="border w-10 flex justify-center items-center rounded-md"><Trash size={16} /></button>
-                                            </div>
-                                        </div>
-
-
-                                        <div className="border  border-[#E5ECF0] bg-white w-72 p-4 rounded-lg">
-                                            <div className="flex gap-2">
-                                                <div className="border border-[#E5ECF0] w-10 h-10 flex items-center justify-center rounded-lg "><User /></div>
-                                                <div className="flex flex-col">
-                                                    <p className="text-sm">Nama Guru</p>
-                                                    <p className="text-sm text-gray-400">Nip: <span className="text-gray-400">111323</span></p>
-                                                    <span className="bg-orange-100 border border-orange-200 text-orange-400 text-center text-xs h-6 w-14 py-1 rounded-md mt-2">Aktif</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-2 border-b py-4">
-                                                <div className="flex gap-2 items-center"><Book size={16} /> <p className="text-sm text-gray-400">pelajaran</p></div>
-                                                <div className="flex gap-2 items-center"><Square size={16} /><p className="text-sm text-gray-400">Guru@gmail.com</p></div>
-                                                <div className="flex gap-3 items-center"><Phone size={16} /><p className="text-sm text-gray-400">+625464435345</p></div>
-                                            </div>
-                                            <div className="mt-4 flex justify-between">
-                                                <button className="text-xs border w-52 flex justify-center items-center gap-1 py-2 rounded-md"><Edit size={14} />Edit</button>
-                                                <button className="border w-10 flex justify-center items-center rounded-md"><Trash size={16} /></button>
-                                            </div>
-                                        </div>
-
-                                        <div className="border  border-[#E5ECF0] bg-white w-72 p-4 rounded-lg">
-                                            <div className="flex gap-2">
-                                                <div className="border border-[#E5ECF0] w-10 h-10 flex items-center justify-center rounded-lg "><User /></div>
-                                                <div className="flex flex-col">
-                                                    <p className="text-sm">Nama Guru</p>
-                                                    <p className="text-sm text-gray-400">Nip: <span className="text-gray-400">111323</span></p>
-                                                    <span className="bg-orange-100 border border-orange-200 text-orange-400 text-center text-xs h-6 w-14 py-1 rounded-md mt-2">Aktif</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-2 border-b py-4">
-                                                <div className="flex gap-2 items-center"><Book size={16} /> <p className="text-sm text-gray-400">pelajaran</p></div>
-                                                <div className="flex gap-2 items-center"><Square size={16} /><p className="text-sm text-gray-400">Guru@gmail.com</p></div>
-                                                <div className="flex gap-3 items-center"><Phone size={16} /><p className="text-sm text-gray-400">+625464435345</p></div>
-                                            </div>
-                                            <div className="mt-4 flex justify-between">
-                                                <button className="text-xs border w-52 flex justify-center items-center gap-1 py-2 rounded-md"><Edit size={14} />Edit</button>
-                                                <button className="border w-10 flex justify-center items-center rounded-md"><Trash size={16} /></button>
-                                            </div>
-                                        </div>
-
-                                        <div className="border  border-[#E5ECF0] bg-white w-72 p-4 rounded-lg">
-                                            <div className="flex gap-2">
-                                                <div className="border border-[#E5ECF0] w-10 h-10 flex items-center justify-center rounded-lg "><User /></div>
-                                                <div className="flex flex-col">
-                                                    <p className="text-sm">Nama Guru</p>
-                                                    <p className="text-sm text-gray-400">Nip: <span className="text-gray-400">111323</span></p>
-                                                    <span className="bg-orange-100 border border-orange-200 text-orange-400 text-center text-xs h-6 w-14 py-1 rounded-md mt-2">Aktif</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-2 border-b py-4">
-                                                <div className="flex gap-2 items-center"><Book size={16} /> <p className="text-sm text-gray-400">pelajaran</p></div>
-                                                <div className="flex gap-2 items-center"><Square size={16} /><p className="text-sm text-gray-400">Guru@gmail.com</p></div>
-                                                <div className="flex gap-3 items-center"><Phone size={16} /><p className="text-sm text-gray-400">+625464435345</p></div>
-                                            </div>
-                                            <div className="mt-4 flex justify-between">
-                                                <button className="text-xs border w-52 flex justify-center items-center gap-1 py-2 rounded-md"><Edit size={14} />Edit</button>
-                                                <button className="border w-10 flex justify-center items-center rounded-md"><Trash size={16} /></button>
-                                            </div>
-                                        </div>
-
-                                        <div className="border  border-[#E5ECF0] bg-white w-72 p-4 rounded-lg">
-                                            <div className="flex gap-2">
-                                                <div className="border border-[#E5ECF0] w-10 h-10 flex items-center justify-center rounded-lg "><User /></div>
-                                                <div className="flex flex-col">
-                                                    <p className="text-sm">Nama Guru</p>
-                                                    <p className="text-sm text-gray-400">Nip: <span className="text-gray-400">111323</span></p>
-                                                    <span className="bg-orange-100 border border-orange-200 text-orange-400 text-center text-xs h-6 w-14 py-1 rounded-md mt-2">Aktif</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-2 border-b py-4">
-                                                <div className="flex gap-2 items-center"><Book size={16} /> <p className="text-sm text-gray-400">pelajaran</p></div>
-                                                <div className="flex gap-2 items-center"><Square size={16} /><p className="text-sm text-gray-400">Guru@gmail.com</p></div>
-                                                <div className="flex gap-3 items-center"><Phone size={16} /><p className="text-sm text-gray-400">+625464435345</p></div>
-                                            </div>
-                                            <div className="mt-4 flex justify-between">
-                                                <button className="text-xs border w-52 flex justify-center items-center gap-1 py-2 rounded-md"><Edit size={14} />Edit</button>
-                                                <button className="border w-10 flex justify-center items-center rounded-md"><Trash size={16} /></button>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </div>
+
+                                <TableContainer>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                {coloumns.map((coloumn) => {
+                                                    return (
+                                                        <TableCell key={coloumn.id} align={coloumn.align} style={{ minWidth: coloumn.minWidth }} sx={{ fontWeight: 'bold' }}>
+                                                            {coloumn.label}
+                                                        </TableCell>
+                                                    )
+                                                })}
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rows.slice(page * rowPage, page * rowPage + rowPage).map((row) => {
+                                                return (
+                                                    <TableRow hover role='checkbox' tabIndex={-1} key={row.nisn}>
+                                                        {coloumns.map((coloumn) => {
+                                                            const value = row[coloumn.id];
+                                                            return (
+                                                                <TableCell key={coloumn.id} align={coloumn.align} onClick={() => navigate('/detail-teacher')}>
+                                                                    {coloumn.format && typeof value === 'number'
+                                                                        ? coloumn.format(value) : value}
+                                                                </TableCell>
+                                                            )
+                                                        })}
+                                                    </TableRow>
+                                                )
+                                            })}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+
+                                <TablePagination
+                                    rowsPerPageOptions={[10, 15, 20, 100]}
+                                    component='div'
+                                    count={rows.length}
+                                    rowsPerPage={rowPage}
+                                    page={page}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleRowspage}></TablePagination>
 
                             </div>
-
                         </div>
                     </div>
 
